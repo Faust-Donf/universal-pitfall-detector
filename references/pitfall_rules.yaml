@@ -1,0 +1,60 @@
+rules:
+  - id: effect_size_tiny
+    name: "效应量微小陷阱"
+    desc: "p<0.05 但实际差异微不足道"
+    trigger: "p_value < 0.05 and abs(cohens_d) < 0.2"
+    severity: high
+
+  - id: relative_vs_absolute
+    name: "相对风险夸大陷阱"
+    desc: "只报相对变化(RRR)，掩盖微小的绝对变化(ARR)"
+    trigger: "rrr > 0.3 and arr < 0.05"
+    severity: high
+
+  - id: soft_hard_endpoint
+    name: "软硬终点偷换陷阱"
+    desc: "主观/次要终点显著，客观/主要硬终点不显著"
+    trigger: "subjective_significant and not objective_significant"
+    severity: high
+
+  - id: placebo_uncontrolled
+    name: "安慰剂效应未控制"
+    desc: "开放标签 + 主观结局"
+    trigger: "design == 'open-label' and outcome_type == 'subjective'"
+    severity: medium
+
+  - id: simpson_paradox
+    name: "辛普森悖论"
+    desc: "整体趋势与所有分组趋势相反"
+    trigger: "overall_winner != subgroup_winner (consistent)"
+    severity: high
+
+  - id: survivorship_bias
+    name: "幸存者偏差"
+    desc: "样本只含成功者/存活者，缺失沉默的失败分母"
+    trigger: "sample contains only survivors"
+    severity: high
+
+  - id: base_rate_fallacy
+    name: "基率谬误"
+    desc: "忽略先验概率，被个例误导"
+    trigger: "ignores prior probability"
+    severity: medium
+
+  - id: selection_bias
+    name: "选择/无应答偏差"
+    desc: "发声样本不能代表总体（如只有极端者评价）"
+    trigger: "response_rate < 0.2 and conclusion about population"
+    severity: medium
+
+  - id: data_contamination
+    name: "数据泄露/污染"
+    desc: "测试集出现在训练集中，分数虚高"
+    trigger: "clean_score < contaminated_score - 5"
+    severity: high
+
+  - id: multiple_comparison
+    name: "多重比较未校正"
+    desc: "多指标中挑显著的报告"
+    trigger: "n_tests > 5 and no correction"
+    severity: medium
