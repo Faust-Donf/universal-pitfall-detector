@@ -1,0 +1,638 @@
+<!--
+  学术杂志风格 HTML 模板
+  灵感来自 NEJM / JAMA / Nature 的视觉语言
+  占位符（由 scripts/html_report.py 替换）：
+    鱼油（Omega-3）对健康有帮助吗？            主标题
+    A Statistical Pitfall Review of Omega-3 Supplementation Claims         副标题/数据源描述
+    universal-pitfall-detector · 数据基于公开 RCT 与 Cochrane 综述          作者署名（可留空）
+    2026 年 05 月 29 日             报告日期
+    鱼油作为全球年销 <mark class='hl-blue'>~80 亿美元</mark> 的保健品，被广泛宣传为『预防心血管病、抗衰老、补脑、增强免疫』。然而大型独立 RCT（VITAL/ASCEND/STRENGTH）<mark class='hl-red'>几乎全部为阴性结果</mark>，与营销话术形成强烈反差。      摘要"背景"段
+    基于公开 RCT 与 Cochrane 综述，使用 universal-pitfall-detector 对常见鱼油健康宣传进行 9 类陷阱规则匹配，并构造对应统计指标（ARR / RRR / NNT / Cohen's d / 多重比较校正）。 摘要"方法"段
+    共检出 <mark>8 项统计陷阱</mark>，其中<mark class='hl-red'>高危 4 项</mark>、中等 4 项。REDUCE-IT 头条『风险降低 22%』在绝对值上仅 <mark>ARR=4.8%</mark>（<mark>NNT=21</mark>，5 年随访）；同剂量 STRENGTH 试验为 <mark class='hl-red'>阴性</mark>，提示安慰剂矿物油可能造成 <mark class='hl-red'>伪阳性</mark>。 摘要"结果"段
+    绝大多数人服用市售鱼油保健品 <mark class='hl-red'>没有可证实的健康获益</mark>。唯一明确有效的场景：<mark class='hl-green'>高危心血管患者 + 处方级 4g 纯 EPA + 医生指导</mark>。保健剂量（300–1000 mg EPA+DHA）在严谨 RCT 中 <mark class='hl-red'>无心血管 / 死亡获益</mark>。   摘要"结论"段
+    <div class="kpi">  <div class="v">22%</div>  <div class="l">宣传相对风险降低</div>  <div class="s">REDUCE-IT 头条数字</div></div>
+<div class="kpi">  <div class="v">4.8%</div>  <div class="l">真实绝对风险降低</div>  <div class="s">5 年累计 ARR</div></div>
+<div class="kpi">  <div class="v">21</div>  <div class="l">NNT 获益人数</div>  <div class="s">21 人吃 5 年才省 1 例</div></div>
+<div class="kpi">  <div class="v">8</div>  <div class="l">检出陷阱总数</div>  <div class="s">4 高危 + 4 中等</div></div>        KPI 卡片 HTML
+    <div class="figure-grid">
+<figure class="">  <div class="figbody"><img src="fig1_endpoints.png" alt="终点显著性热图。"></div>  <figcaption>    <span class="figlabel">Figure 1.</span>    <span class="figtitle">终点显著性热图。</span>    8 个客观硬终点中只有甘油三酯（替代终点）显著，心血管事件、死亡率等均不显著；2 个主观自评终点显著，提示软硬终点偷换。  </figcaption></figure>
+<figure class="">  <div class="figbody"><img src="fig2_risk.png" alt="REDUCE-IT 主要终点风险拆解。"></div>  <figcaption>    <span class="figlabel">Figure 2.</span>    <span class="figtitle">REDUCE-IT 主要终点风险拆解。</span>    对照组 22.0% vs 治疗组 17.2%。相对降低 22% 听起来很大，但绝对差仅 4.8%，NNT=21。  </figcaption></figure>
+<figure class="full">  <div class="figbody"><img src="fig3_contamination.png" alt="营销宣传 vs 独立 RCT 真实效应对比。"></div>  <figcaption>    <span class="figlabel">Figure 3.</span>    <span class="figtitle">营销宣传 vs 独立 RCT 真实效应对比。</span>    营销宣称的 25% 心血管获益在大型独立 RCT 中近乎为零；替代终点（甘油三酯）改善亦未转化为硬终点收益。  </figcaption></figure>
+</div>      核心证据双栏 figure grid（BI 风格）
+    <div class="positive">  <h3>✓  确定有效的场景</h3>  <p class="lede">并不是说鱼油完全没用——以下场景的获益是被严谨证据支持的：</p>  <div class="grid"><div class='item'>  <div class='who'>高甘油三酯（≥150 mg/dL）+ 已确诊心血管病 + 他汀治疗者</div>  <div class='what'><mark class='hl-green'>心血管复合事件 5 年 ARR ≈ 4.8%（NNT=21）</mark>。需医生评估，处方药 Vascepa（纯 EPA）。</div>  <div class='meta'><b>证据：</b>REDUCE-IT (NEJM 2019)，N=8,179 · <b>剂量 / 方式：</b>纯 EPA <b>4 g / 天</b>（处方剂量）</div></div><div class='item'>  <div class='who'>饮食极度缺乏 omega-3（很少吃鱼 / 严格素食）</div>  <div class='what'>补足到基础需求量可改善血脂谱与必需脂肪酸状态。</div>  <div class='meta'><b>证据：</b>营养学共识 / WHO 推荐 · <b>剂量 / 方式：</b>EPA+DHA <b>250–500 mg / 天</b>（食物或低剂量补剂）</div></div><div class='item'>  <div class='who'>妊娠期与哺乳期女性</div>  <div class='what'><mark class='hl-green'>胎儿与婴儿神经发育需要 DHA</mark>，母体若摄入不足建议补充。</div>  <div class='meta'><b>证据：</b>FDA / NIH 推荐 · <b>剂量 / 方式：</b>DHA <b>200–300 mg / 天</b></div></div><div class='item'>  <div class='who'>重度高甘油三酯血症（≥500 mg/dL）</div>  <div class='what'><mark class='hl-green'>降低胰腺炎风险</mark>，处方鱼油是一线治疗之一。</div>  <div class='meta'><b>证据：</b>AHA / ADA 指南 · <b>剂量 / 方式：</b>EPA+DHA <b>3–4 g / 天</b>，处方级</div></div></div></div> "确定有效"绿色调区段 HTML
+    <table class='data'><thead><tr><th style='width:36px'>#</th><th style='width:72px'>严重度</th><th style='width:160px'>陷阱</th><th>关键发现</th></tr></thead><tbody><tr><td class='num'>1</td><td><span class='badge high'>高危</span></td><td><strong>相对风险夸大</strong></td><td>REDUCE-IT 头条「心血管风险降低 22%」吸睛。但 5 年绝对差只有 ARR=4.8%，NNT=21—— 21 人吃 5 年才多 1 人避免一次心血管事件。且 STRENGTH（EPA+DHA）同剂量 RCT 完全无效，提示可能是矿物油安慰剂'反向…</td></tr>
+<tr><td class='num'>2</td><td><span class='badge high'>高危</span></td><td><strong>软硬终点偷换</strong></td><td>8 个客观硬终点中只有「甘油三酯」显著下降（替代终点，并未转化为心血管/死亡获益）；主观自评（精力、记忆）显著。把替代终点 + 主观自评包装成『改善心脏 / 大脑健康』，是软硬终点偷换的典型套路。</td></tr>
+<tr><td class='num'>3</td><td><span class='badge high'>高危</span></td><td><strong>人群泛化错误（条件概率混用）</strong></td><td>唯一阳性大型 RCT（REDUCE-IT）的入组条件极其特殊：甘油三酯 ≥150 mg/dL + 已确诊心血管病或糖尿病 + 已服他汀，剂量 4g 纯 EPA。VITAL/ASCEND 在一般人群与糖尿病人群中均为阴性。营销把『高危患者吃药剂』的结论卖给『…</td></tr>
+<tr><td class='num'>4</td><td><span class='badge high'>高危</span></td><td><strong>剂量-效应混淆</strong></td><td>阳性结果剂量：4 g/天纯 EPA（处方药 Vascepa）。市售保健品：通常 EPA+DHA 合计 300-1000 mg/天。保健剂量在 RCT 中无效；但消费者看到『鱼油有用』就买保健品，证据强度被悄悄换了一档。</td></tr>
+<tr><td class='num'>5</td><td><span class='badge medium'>中等</span></td><td><strong>替代终点滥用</strong></td><td>『甘油三酯下降』是替代终点（surrogate endpoint），只有当它能稳定预测硬终点（心梗/死亡）时才有意义。多项研究显示：单纯降甘油三酯 ≠ 减少心血管事件。用替代终点的'改善'倒推临床获益，逻辑链断裂。</td></tr>
+<tr><td class='num'>6</td><td><span class='badge medium'>中等</span></td><td><strong>多重比较未校正</strong></td><td>共测18项只报告3项；Bonferroni校正后阈值应为 0.05/18=0.0028</td></tr>
+<tr><td class='num'>7</td><td><span class='badge medium'>中等</span></td><td><strong>发表 / 资助偏差</strong></td><td>早期小型阳性研究密集发表，引爆市场；后续大型独立 RCT（VITAL/ASCEND/STRENGTH）几乎全部阴性。鱼油全球市场 ~80 亿美元，行业资助研究阳性率显著高于独立研究。看到『某研究显示鱼油有效』要先看：发表年份、样本量、资助方。</td></tr>
+<tr><td class='num'>8</td><td><span class='badge medium'>中等</span></td><td><strong>产品质量异质性（隐藏负效应）</strong></td><td>第三方检测显示：相当比例市售鱼油氧化超标、EPA/DHA 实际含量低于标签、重金属污染。氧化的 omega-3 不仅无效，可能促炎。RCT 用的是制药级产品；保健品的实际成分质量是另一个分布。</td></tr></tbody></table>    陷阱速览表 HTML
+    <div class="pitfall high">  <div class="head">    <span class="num">陷阱 01</span>    <span class="badge high">高危</span>    <span class="name">相对风险夸大</span>  </div>  <p>REDUCE-IT 头条「心血管风险降低 22%」吸睛。但 5 年绝对差只有 ARR=4.8%，NNT=21—— 21 人吃 5 年才多 1 人避免一次心血管事件。且 STRENGTH（EPA+DHA）同剂量 RCT 完全无效，提示可能是矿物油安慰剂'反向作用'造成的伪阳性。</p></div>
+<div class="pitfall high">  <div class="head">    <span class="num">陷阱 02</span>    <span class="badge high">高危</span>    <span class="name">软硬终点偷换</span>  </div>  <p>8 个客观硬终点中只有「甘油三酯」显著下降（替代终点，并未转化为心血管/死亡获益）；主观自评（精力、记忆）显著。把替代终点 + 主观自评包装成『改善心脏 / 大脑健康』，是软硬终点偷换的典型套路。</p></div>
+<div class="pitfall high">  <div class="head">    <span class="num">陷阱 03</span>    <span class="badge high">高危</span>    <span class="name">人群泛化错误（条件概率混用）</span>  </div>  <p>唯一阳性大型 RCT（REDUCE-IT）的入组条件极其特殊：甘油三酯 ≥150 mg/dL + 已确诊心血管病或糖尿病 + 已服他汀，剂量 4g 纯 EPA。VITAL/ASCEND 在一般人群与糖尿病人群中均为阴性。营销把『高危患者吃药剂』的结论卖给『健康人吃保健剂量』，是把条件概率 P(获益｜病人+药剂) 当成 P(获益｜健康人+保健量)。</p></div>
+<div class="pitfall high">  <div class="head">    <span class="num">陷阱 04</span>    <span class="badge high">高危</span>    <span class="name">剂量-效应混淆</span>  </div>  <p>阳性结果剂量：4 g/天纯 EPA（处方药 Vascepa）。市售保健品：通常 EPA+DHA 合计 300-1000 mg/天。保健剂量在 RCT 中无效；但消费者看到『鱼油有用』就买保健品，证据强度被悄悄换了一档。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 05</span>    <span class="badge medium">中等</span>    <span class="name">替代终点滥用</span>  </div>  <p>『甘油三酯下降』是替代终点（surrogate endpoint），只有当它能稳定预测硬终点（心梗/死亡）时才有意义。多项研究显示：单纯降甘油三酯 ≠ 减少心血管事件。用替代终点的'改善'倒推临床获益，逻辑链断裂。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 06</span>    <span class="badge medium">中等</span>    <span class="name">多重比较未校正</span>  </div>  <p>共测18项只报告3项；Bonferroni校正后阈值应为 0.05/18=0.0028</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 07</span>    <span class="badge medium">中等</span>    <span class="name">发表 / 资助偏差</span>  </div>  <p>早期小型阳性研究密集发表，引爆市场；后续大型独立 RCT（VITAL/ASCEND/STRENGTH）几乎全部阴性。鱼油全球市场 ~80 亿美元，行业资助研究阳性率显著高于独立研究。看到『某研究显示鱼油有效』要先看：发表年份、样本量、资助方。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 08</span>    <span class="badge medium">中等</span>    <span class="name">产品质量异质性（隐藏负效应）</span>  </div>  <p>第三方检测显示：相当比例市售鱼油氧化超标、EPA/DHA 实际含量低于标签、重金属污染。氧化的 omega-3 不仅无效，可能促炎。RCT 用的是制药级产品；保健品的实际成分质量是另一个分布。</p></div>   陷阱详解 HTML
+    <table class='data'>
+<thead><tr><th>场景</th><th>证据来源</th><th style='width:240px'>结论</th></tr></thead>
+<tbody>
+<tr><td>一般健康人长期服用市售鱼油保健品</td><td><em>VITAL (NEJM 2019) · ASCEND (NEJM 2018)</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>无心血管 / 死亡获益</mark></td></tr>
+<tr><td>糖尿病人群预防心血管事件</td><td><em>ASCEND</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>阴性</mark></td></tr>
+<tr><td>已确诊心血管病 + 高甘油三酯 + 他汀，处方 4g 纯 EPA</td><td><em>REDUCE-IT (NEJM 2019)</em></td><td><span class='badge medium'>存疑</span> <mark>风险降低</mark>，但 STRENGTH 同剂量阴性，存疑</td></tr>
+<tr><td>极度缺乏 omega-3 饮食者补足基础需求</td><td><em>营养学共识</em></td><td><span class='badge ok'>支持</span> <mark class='hl-green'>合理</mark></td></tr>
+<tr><td>宣称的『补脑』『抗衰』『增强免疫』</td><td><em>多项 RCT 客观指标</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>客观无变化</mark>，仅自评显著</td></tr>
+</tbody></table> 分场景结论表 HTML
+    <div class="recs"><div class="col do"><h4>推荐做</h4><ul><li>饮食优先：每周 <mark>2 次富脂鱼</mark>（三文鱼/沙丁鱼/鲭鱼）即可覆盖 omega-3 基础需求</li><li>若已确诊心血管病 + 高甘油三酯，咨询医生是否处方 <mark class='hl-green'>Vascepa（纯 EPA 4g/天）</mark></li><li>买保健品看：第三方检测报告（IFOS/USP）、EPA+DHA 实际含量、过氧化值</li></ul></div><div class="col avoid"><h4>避免做</h4><ul><li>把鱼油当作『预防心脏病』『抗衰老』『补脑』的<mark class='hl-red'>万能保健品</mark>长期吃</li><li>信『鱼油降低 25% 心血管风险』类营销话术（绝对差仅 <mark>~5%</mark>，多 RCT 未复现）</li><li>买廉价、无第三方检测、储存条件不明的鱼油（<mark class='hl-red'>氧化产物可能促炎</mark>）</li></ul></div></div>  实操建议 HTML
+    <div class="five"><h4>读者守则</h4><ol><li>绝对差多大？（不是相对差）<span class='tag'>针对相对风险夸大</span></li><li>主观还是客观终点？<span class='tag'>针对软硬终点偷换</span></li><li>测了多少指标？只报了几个？<span class='tag'>针对多重比较</span></li><li>什么人群？能套到我吗？<span class='tag'>针对泛化 / 异质性</span></li><li>谁出的钱？谁在发声？<span class='tag'>针对资助偏差 / 选择偏差</span></li></ol></div>   5 问护身符 HTML
+    <ol><li>Manson JE, et al. Marine n-3 Fatty Acids and Prevention of Cardiovascular Disease and Cancer (VITAL). N Engl J Med 2019;380:23-32.</li><li>ASCEND Study Collaborative Group. Effects of n-3 Fatty Acid Supplements in Diabetes Mellitus. N Engl J Med 2018;379:1540-1550.</li><li>Bhatt DL, et al. Cardiovascular Risk Reduction with Icosapent Ethyl for Hypertriglyceridemia (REDUCE-IT). N Engl J Med 2019;380:11-22.</li><li>Nicholls SJ, et al. Effect of High-Dose Omega-3 Fatty Acids vs Corn Oil on Major Adverse Cardiovascular Events in Patients at High Cardiovascular Risk (STRENGTH). JAMA 2020;324:2268-2280.</li><li>Abdelhamid AS, et al. Omega-3 fatty acids for the primary and secondary prevention of cardiovascular disease. Cochrane Database Syst Rev 2020.</li></ol>       参考文献
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>鱼油（Omega-3）对健康有帮助吗？</title>
+<style>
+  /* === 字体 === */
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --serif: 'Source Serif 4', 'Source Serif Pro', 'Songti SC', 'Noto Serif SC', 'Charter', Georgia, serif;
+    --sans:  'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --ink:        #1a1a1a;
+    --ink-soft:   #404040;
+    --ink-muted:  #6b6b6b;
+    --line:       #d8d8d8;
+    --rule:       #e8e8e8;
+    --bg:         #ffffff;
+    --panel:      #fafaf7;
+    --accent:     #8B0000;       /* 学术红 / NEJM 风 */
+    --accent-soft:#fff5f5;
+    --high:       #B92020;
+    --medium:     #C77B30;
+    --low:        #6c757d;
+    --success:    #2d6a4f;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #f4f2ed;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .paper {
+    max-width: 880px;
+    margin: 32px auto;
+    background: var(--bg);
+    padding: 56px 64px 72px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-top: 4px solid var(--accent);
+  }
+
+  /* === 报头 === */
+  .masthead {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--sans);
+  }
+  .masthead .journal {
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--accent);
+  }
+  .masthead .meta {
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  h1.title {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.25;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+  .subtitle {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin: 0 0 8px;
+  }
+  .authors {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+  }
+
+  /* === 摘要 === */
+  .abstract {
+    background: var(--panel);
+    border-left: 3px solid var(--accent);
+    padding: 22px 28px;
+    margin: 28px 0 36px;
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .abstract h2 {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 12px;
+  }
+  .abstract p { margin: 8px 0; }
+  .abstract .label {
+    font-family: var(--sans);
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-right: 6px;
+  }
+
+  /* === KPI 行 === */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 28px 0;
+  }
+  .kpi {
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    padding: 16px 14px 14px;
+    text-align: center;
+    background: #fff;
+  }
+  .kpi .v {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+  .kpi .l {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink);
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  .kpi .s {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  /* === 章节标题 === */
+  h2.section {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 6px;
+    margin: 44px 0 18px;
+  }
+  h2.section::before {
+    content: "§ ";
+    color: var(--accent);
+  }
+
+  h3.sub {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+    margin: 24px 0 8px;
+  }
+
+  p { margin: 12px 0; }
+  p.lead {
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  /* === 荧光笔 === */
+  mark, mark.hl-yellow {
+    background: linear-gradient(180deg, transparent 55%, #FFE066 55%, #FFE066 92%, transparent 92%);
+    color: inherit;
+    padding: 0 2px;
+    font-weight: 600;
+  }
+  mark.hl-red {
+    background: linear-gradient(180deg, transparent 55%, #FFC2C2 55%, #FFC2C2 92%, transparent 92%);
+    color: var(--high);
+    font-weight: 700;
+  }
+  mark.hl-green {
+    background: linear-gradient(180deg, transparent 55%, #C8EBD0 55%, #C8EBD0 92%, transparent 92%);
+    color: var(--success);
+    font-weight: 700;
+  }
+  mark.hl-blue {
+    background: linear-gradient(180deg, transparent 55%, #CDE3F4 55%, #CDE3F4 92%, transparent 92%);
+    color: #1d3557;
+    font-weight: 600;
+  }
+
+  /* === 确定有效（positive findings）区段 === */
+  .positive {
+    background: #F1F8F4;
+    border: 1px solid #C6E2D0;
+    border-left: 4px solid var(--success);
+    padding: 22px 26px 24px;
+    margin: 26px 0 32px;
+  }
+  .positive h3 {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--success);
+    margin: 0 0 4px;
+  }
+  .positive .lede {
+    font-family: var(--serif);
+    font-size: 15.5px;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+  }
+  .positive .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 720px) {
+    .positive .grid { grid-template-columns: 1fr; }
+  }
+  .positive .item {
+    background: #fff;
+    border: 1px solid #d8e8de;
+    padding: 12px 14px;
+    font-size: 13.5px;
+  }
+  .positive .item .who {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--success);
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+  }
+  .positive .item .what {
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 4px 0 6px;
+  }
+  .positive .item .meta {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+  .positive .item .meta b { color: var(--ink); font-weight: 600; }
+
+  /* === 图片 === */
+  figure {
+    margin: 0;
+    text-align: center;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  figure .figbody {
+    padding: 14px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+  }
+  figure img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+  figcaption {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    text-align: left;
+    padding: 12px 16px 14px;
+  }
+  figcaption .figlabel {
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 6px;
+    letter-spacing: 0.04em;
+  }
+  figcaption .figtitle {
+    font-weight: 600;
+    color: var(--ink);
+    margin-right: 4px;
+  }
+
+  /* === BI 风格双栏 figure grid === */
+  .figure-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 24px 0 32px;
+  }
+  .figure-grid figure.full {
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 720px) {
+    .figure-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* === 表格 === */
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 14px;
+    font-family: var(--serif);
+  }
+  table.data th, table.data td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  table.data thead th {
+    font-family: var(--sans);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    border-bottom: 2px solid var(--ink);
+    background: var(--panel);
+  }
+  table.data tr:last-child td { border-bottom: 2px solid var(--ink); }
+  table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 9px;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #fff;
+    border-radius: 2px;
+  }
+  .badge.high   { background: var(--high); }
+  .badge.medium { background: var(--medium); }
+  .badge.low    { background: var(--low); }
+  .badge.ok     { background: var(--success); }
+
+  /* === 陷阱详解卡片 === */
+  .pitfall {
+    border-left: 3px solid var(--line);
+    padding: 4px 0 4px 18px;
+    margin: 22px 0;
+  }
+  .pitfall.high   { border-color: var(--high); }
+  .pitfall.medium { border-color: var(--medium); }
+  .pitfall.low    { border-color: var(--low); }
+  .pitfall .head {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .pitfall .name {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .pitfall .num {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+  }
+  .pitfall p {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin: 6px 0;
+  }
+
+  /* === 实操建议 === */
+  .recs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 18px 0;
+  }
+  .recs .col {
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+    font-size: 14px;
+  }
+  .recs .col h4 {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .recs .col.do h4    { color: var(--success); }
+  .recs .col.avoid h4 { color: var(--high); }
+  .recs ul { margin: 0; padding-left: 18px; }
+  .recs li { margin: 6px 0; line-height: 1.55; }
+
+  /* === 5 问护身符 === */
+  .five {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-family: var(--sans);
+  }
+  .five h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin: 0 0 12px;
+    color: var(--accent);
+  }
+  .five ol {
+    margin: 0; padding: 0;
+    list-style: none;
+    counter-reset: q;
+  }
+  .five li {
+    counter-increment: q;
+    padding: 8px 0 8px 36px;
+    position: relative;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    border-bottom: 1px dashed var(--rule);
+  }
+  .five li:last-child { border-bottom: none; }
+  .five li::before {
+    content: counter(q);
+    position: absolute; left: 0; top: 6px;
+    width: 24px; height: 24px;
+    line-height: 24px; text-align: center;
+    background: var(--accent); color: #fff;
+    font-weight: 700;
+    font-family: var(--sans);
+    border-radius: 50%;
+    font-size: 11.5px;
+  }
+  .five .tag {
+    color: var(--ink-muted);
+    font-style: italic;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  /* === 参考文献 === */
+  .refs {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 12px;
+  }
+  .refs ol {
+    padding-left: 22px;
+    margin: 0;
+  }
+  .refs li {
+    margin: 6px 0;
+    line-height: 1.55;
+  }
+
+  /* === 页脚 === */
+  footer.colophon {
+    margin-top: 60px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* === 打印优化 === */
+  @media print {
+    body { background: #fff; }
+    .paper { box-shadow: none; margin: 0; max-width: none; padding: 24mm; }
+  }
+</style>
+</head>
+<body>
+<article class="paper">
+
+  <header class="masthead">
+    <span class="journal">Pitfall Review · 统计陷阱评论</span>
+    <span class="meta">2026 年 05 月 29 日</span>
+  </header>
+
+  <h1 class="title">鱼油（Omega-3）对健康有帮助吗？</h1>
+  <p class="subtitle">A Statistical Pitfall Review of Omega-3 Supplementation Claims</p>
+  <p class="authors">universal-pitfall-detector · 数据基于公开 RCT 与 Cochrane 综述</p>
+
+  <section class="abstract">
+    <h2>Abstract · 摘要</h2>
+    <p><span class="label">背景</span>鱼油作为全球年销 <mark class='hl-blue'>~80 亿美元</mark> 的保健品，被广泛宣传为『预防心血管病、抗衰老、补脑、增强免疫』。然而大型独立 RCT（VITAL/ASCEND/STRENGTH）<mark class='hl-red'>几乎全部为阴性结果</mark>，与营销话术形成强烈反差。</p>
+    <p><span class="label">方法</span>基于公开 RCT 与 Cochrane 综述，使用 universal-pitfall-detector 对常见鱼油健康宣传进行 9 类陷阱规则匹配，并构造对应统计指标（ARR / RRR / NNT / Cohen's d / 多重比较校正）。</p>
+    <p><span class="label">结果</span>共检出 <mark>8 项统计陷阱</mark>，其中<mark class='hl-red'>高危 4 项</mark>、中等 4 项。REDUCE-IT 头条『风险降低 22%』在绝对值上仅 <mark>ARR=4.8%</mark>（<mark>NNT=21</mark>，5 年随访）；同剂量 STRENGTH 试验为 <mark class='hl-red'>阴性</mark>，提示安慰剂矿物油可能造成 <mark class='hl-red'>伪阳性</mark>。</p>
+    <p><span class="label">结论</span>绝大多数人服用市售鱼油保健品 <mark class='hl-red'>没有可证实的健康获益</mark>。唯一明确有效的场景：<mark class='hl-green'>高危心血管患者 + 处方级 4g 纯 EPA + 医生指导</mark>。保健剂量（300–1000 mg EPA+DHA）在严谨 RCT 中 <mark class='hl-red'>无心血管 / 死亡获益</mark>。</p>
+  </section>
+
+  <div class="kpi-row">
+    <div class="kpi">  <div class="v">22%</div>  <div class="l">宣传相对风险降低</div>  <div class="s">REDUCE-IT 头条数字</div></div>
+<div class="kpi">  <div class="v">4.8%</div>  <div class="l">真实绝对风险降低</div>  <div class="s">5 年累计 ARR</div></div>
+<div class="kpi">  <div class="v">21</div>  <div class="l">NNT 获益人数</div>  <div class="s">21 人吃 5 年才省 1 例</div></div>
+<div class="kpi">  <div class="v">8</div>  <div class="l">检出陷阱总数</div>  <div class="s">4 高危 + 4 中等</div></div>
+  </div>
+
+  <h2 class="section">核心证据</h2>
+  <div class="figure-grid">
+<figure class="">  <div class="figbody"><img src="fig1_endpoints.png" alt="终点显著性热图。"></div>  <figcaption>    <span class="figlabel">Figure 1.</span>    <span class="figtitle">终点显著性热图。</span>    8 个客观硬终点中只有甘油三酯（替代终点）显著，心血管事件、死亡率等均不显著；2 个主观自评终点显著，提示软硬终点偷换。  </figcaption></figure>
+<figure class="">  <div class="figbody"><img src="fig2_risk.png" alt="REDUCE-IT 主要终点风险拆解。"></div>  <figcaption>    <span class="figlabel">Figure 2.</span>    <span class="figtitle">REDUCE-IT 主要终点风险拆解。</span>    对照组 22.0% vs 治疗组 17.2%。相对降低 22% 听起来很大，但绝对差仅 4.8%，NNT=21。  </figcaption></figure>
+<figure class="full">  <div class="figbody"><img src="fig3_contamination.png" alt="营销宣传 vs 独立 RCT 真实效应对比。"></div>  <figcaption>    <span class="figlabel">Figure 3.</span>    <span class="figtitle">营销宣传 vs 独立 RCT 真实效应对比。</span>    营销宣称的 25% 心血管获益在大型独立 RCT 中近乎为零；替代终点（甘油三酯）改善亦未转化为硬终点收益。  </figcaption></figure>
+</div>
+
+  <div class="positive">  <h3>✓  确定有效的场景</h3>  <p class="lede">并不是说鱼油完全没用——以下场景的获益是被严谨证据支持的：</p>  <div class="grid"><div class='item'>  <div class='who'>高甘油三酯（≥150 mg/dL）+ 已确诊心血管病 + 他汀治疗者</div>  <div class='what'><mark class='hl-green'>心血管复合事件 5 年 ARR ≈ 4.8%（NNT=21）</mark>。需医生评估，处方药 Vascepa（纯 EPA）。</div>  <div class='meta'><b>证据：</b>REDUCE-IT (NEJM 2019)，N=8,179 · <b>剂量 / 方式：</b>纯 EPA <b>4 g / 天</b>（处方剂量）</div></div><div class='item'>  <div class='who'>饮食极度缺乏 omega-3（很少吃鱼 / 严格素食）</div>  <div class='what'>补足到基础需求量可改善血脂谱与必需脂肪酸状态。</div>  <div class='meta'><b>证据：</b>营养学共识 / WHO 推荐 · <b>剂量 / 方式：</b>EPA+DHA <b>250–500 mg / 天</b>（食物或低剂量补剂）</div></div><div class='item'>  <div class='who'>妊娠期与哺乳期女性</div>  <div class='what'><mark class='hl-green'>胎儿与婴儿神经发育需要 DHA</mark>，母体若摄入不足建议补充。</div>  <div class='meta'><b>证据：</b>FDA / NIH 推荐 · <b>剂量 / 方式：</b>DHA <b>200–300 mg / 天</b></div></div><div class='item'>  <div class='who'>重度高甘油三酯血症（≥500 mg/dL）</div>  <div class='what'><mark class='hl-green'>降低胰腺炎风险</mark>，处方鱼油是一线治疗之一。</div>  <div class='meta'><b>证据：</b>AHA / ADA 指南 · <b>剂量 / 方式：</b>EPA+DHA <b>3–4 g / 天</b>，处方级</div></div></div></div>
+
+  <h2 class="section">陷阱速览</h2>
+  <table class='data'><thead><tr><th style='width:36px'>#</th><th style='width:72px'>严重度</th><th style='width:160px'>陷阱</th><th>关键发现</th></tr></thead><tbody><tr><td class='num'>1</td><td><span class='badge high'>高危</span></td><td><strong>相对风险夸大</strong></td><td>REDUCE-IT 头条「心血管风险降低 22%」吸睛。但 5 年绝对差只有 ARR=4.8%，NNT=21—— 21 人吃 5 年才多 1 人避免一次心血管事件。且 STRENGTH（EPA+DHA）同剂量 RCT 完全无效，提示可能是矿物油安慰剂'反向…</td></tr>
+<tr><td class='num'>2</td><td><span class='badge high'>高危</span></td><td><strong>软硬终点偷换</strong></td><td>8 个客观硬终点中只有「甘油三酯」显著下降（替代终点，并未转化为心血管/死亡获益）；主观自评（精力、记忆）显著。把替代终点 + 主观自评包装成『改善心脏 / 大脑健康』，是软硬终点偷换的典型套路。</td></tr>
+<tr><td class='num'>3</td><td><span class='badge high'>高危</span></td><td><strong>人群泛化错误（条件概率混用）</strong></td><td>唯一阳性大型 RCT（REDUCE-IT）的入组条件极其特殊：甘油三酯 ≥150 mg/dL + 已确诊心血管病或糖尿病 + 已服他汀，剂量 4g 纯 EPA。VITAL/ASCEND 在一般人群与糖尿病人群中均为阴性。营销把『高危患者吃药剂』的结论卖给『…</td></tr>
+<tr><td class='num'>4</td><td><span class='badge high'>高危</span></td><td><strong>剂量-效应混淆</strong></td><td>阳性结果剂量：4 g/天纯 EPA（处方药 Vascepa）。市售保健品：通常 EPA+DHA 合计 300-1000 mg/天。保健剂量在 RCT 中无效；但消费者看到『鱼油有用』就买保健品，证据强度被悄悄换了一档。</td></tr>
+<tr><td class='num'>5</td><td><span class='badge medium'>中等</span></td><td><strong>替代终点滥用</strong></td><td>『甘油三酯下降』是替代终点（surrogate endpoint），只有当它能稳定预测硬终点（心梗/死亡）时才有意义。多项研究显示：单纯降甘油三酯 ≠ 减少心血管事件。用替代终点的'改善'倒推临床获益，逻辑链断裂。</td></tr>
+<tr><td class='num'>6</td><td><span class='badge medium'>中等</span></td><td><strong>多重比较未校正</strong></td><td>共测18项只报告3项；Bonferroni校正后阈值应为 0.05/18=0.0028</td></tr>
+<tr><td class='num'>7</td><td><span class='badge medium'>中等</span></td><td><strong>发表 / 资助偏差</strong></td><td>早期小型阳性研究密集发表，引爆市场；后续大型独立 RCT（VITAL/ASCEND/STRENGTH）几乎全部阴性。鱼油全球市场 ~80 亿美元，行业资助研究阳性率显著高于独立研究。看到『某研究显示鱼油有效』要先看：发表年份、样本量、资助方。</td></tr>
+<tr><td class='num'>8</td><td><span class='badge medium'>中等</span></td><td><strong>产品质量异质性（隐藏负效应）</strong></td><td>第三方检测显示：相当比例市售鱼油氧化超标、EPA/DHA 实际含量低于标签、重金属污染。氧化的 omega-3 不仅无效，可能促炎。RCT 用的是制药级产品；保健品的实际成分质量是另一个分布。</td></tr></tbody></table>
+
+  <h2 class="section">陷阱详解</h2>
+  <div class="pitfall high">  <div class="head">    <span class="num">陷阱 01</span>    <span class="badge high">高危</span>    <span class="name">相对风险夸大</span>  </div>  <p>REDUCE-IT 头条「心血管风险降低 22%」吸睛。但 5 年绝对差只有 ARR=4.8%，NNT=21—— 21 人吃 5 年才多 1 人避免一次心血管事件。且 STRENGTH（EPA+DHA）同剂量 RCT 完全无效，提示可能是矿物油安慰剂'反向作用'造成的伪阳性。</p></div>
+<div class="pitfall high">  <div class="head">    <span class="num">陷阱 02</span>    <span class="badge high">高危</span>    <span class="name">软硬终点偷换</span>  </div>  <p>8 个客观硬终点中只有「甘油三酯」显著下降（替代终点，并未转化为心血管/死亡获益）；主观自评（精力、记忆）显著。把替代终点 + 主观自评包装成『改善心脏 / 大脑健康』，是软硬终点偷换的典型套路。</p></div>
+<div class="pitfall high">  <div class="head">    <span class="num">陷阱 03</span>    <span class="badge high">高危</span>    <span class="name">人群泛化错误（条件概率混用）</span>  </div>  <p>唯一阳性大型 RCT（REDUCE-IT）的入组条件极其特殊：甘油三酯 ≥150 mg/dL + 已确诊心血管病或糖尿病 + 已服他汀，剂量 4g 纯 EPA。VITAL/ASCEND 在一般人群与糖尿病人群中均为阴性。营销把『高危患者吃药剂』的结论卖给『健康人吃保健剂量』，是把条件概率 P(获益｜病人+药剂) 当成 P(获益｜健康人+保健量)。</p></div>
+<div class="pitfall high">  <div class="head">    <span class="num">陷阱 04</span>    <span class="badge high">高危</span>    <span class="name">剂量-效应混淆</span>  </div>  <p>阳性结果剂量：4 g/天纯 EPA（处方药 Vascepa）。市售保健品：通常 EPA+DHA 合计 300-1000 mg/天。保健剂量在 RCT 中无效；但消费者看到『鱼油有用』就买保健品，证据强度被悄悄换了一档。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 05</span>    <span class="badge medium">中等</span>    <span class="name">替代终点滥用</span>  </div>  <p>『甘油三酯下降』是替代终点（surrogate endpoint），只有当它能稳定预测硬终点（心梗/死亡）时才有意义。多项研究显示：单纯降甘油三酯 ≠ 减少心血管事件。用替代终点的'改善'倒推临床获益，逻辑链断裂。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 06</span>    <span class="badge medium">中等</span>    <span class="name">多重比较未校正</span>  </div>  <p>共测18项只报告3项；Bonferroni校正后阈值应为 0.05/18=0.0028</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 07</span>    <span class="badge medium">中等</span>    <span class="name">发表 / 资助偏差</span>  </div>  <p>早期小型阳性研究密集发表，引爆市场；后续大型独立 RCT（VITAL/ASCEND/STRENGTH）几乎全部阴性。鱼油全球市场 ~80 亿美元，行业资助研究阳性率显著高于独立研究。看到『某研究显示鱼油有效』要先看：发表年份、样本量、资助方。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 08</span>    <span class="badge medium">中等</span>    <span class="name">产品质量异质性（隐藏负效应）</span>  </div>  <p>第三方检测显示：相当比例市售鱼油氧化超标、EPA/DHA 实际含量低于标签、重金属污染。氧化的 omega-3 不仅无效，可能促炎。RCT 用的是制药级产品；保健品的实际成分质量是另一个分布。</p></div>
+
+  <h2 class="section">分场景结论</h2>
+  <table class='data'>
+<thead><tr><th>场景</th><th>证据来源</th><th style='width:240px'>结论</th></tr></thead>
+<tbody>
+<tr><td>一般健康人长期服用市售鱼油保健品</td><td><em>VITAL (NEJM 2019) · ASCEND (NEJM 2018)</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>无心血管 / 死亡获益</mark></td></tr>
+<tr><td>糖尿病人群预防心血管事件</td><td><em>ASCEND</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>阴性</mark></td></tr>
+<tr><td>已确诊心血管病 + 高甘油三酯 + 他汀，处方 4g 纯 EPA</td><td><em>REDUCE-IT (NEJM 2019)</em></td><td><span class='badge medium'>存疑</span> <mark>风险降低</mark>，但 STRENGTH 同剂量阴性，存疑</td></tr>
+<tr><td>极度缺乏 omega-3 饮食者补足基础需求</td><td><em>营养学共识</em></td><td><span class='badge ok'>支持</span> <mark class='hl-green'>合理</mark></td></tr>
+<tr><td>宣称的『补脑』『抗衰』『增强免疫』</td><td><em>多项 RCT 客观指标</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>客观无变化</mark>，仅自评显著</td></tr>
+</tbody></table>
+
+  <h2 class="section">实操建议</h2>
+  <div class="recs"><div class="col do"><h4>推荐做</h4><ul><li>饮食优先：每周 <mark>2 次富脂鱼</mark>（三文鱼/沙丁鱼/鲭鱼）即可覆盖 omega-3 基础需求</li><li>若已确诊心血管病 + 高甘油三酯，咨询医生是否处方 <mark class='hl-green'>Vascepa（纯 EPA 4g/天）</mark></li><li>买保健品看：第三方检测报告（IFOS/USP）、EPA+DHA 实际含量、过氧化值</li></ul></div><div class="col avoid"><h4>避免做</h4><ul><li>把鱼油当作『预防心脏病』『抗衰老』『补脑』的<mark class='hl-red'>万能保健品</mark>长期吃</li><li>信『鱼油降低 25% 心血管风险』类营销话术（绝对差仅 <mark>~5%</mark>，多 RCT 未复现）</li><li>买廉价、无第三方检测、储存条件不明的鱼油（<mark class='hl-red'>氧化产物可能促炎</mark>）</li></ul></div></div>
+
+  <h2 class="section">读者守则：5 问护身符</h2>
+  <div class="five"><h4>读者守则</h4><ol><li>绝对差多大？（不是相对差）<span class='tag'>针对相对风险夸大</span></li><li>主观还是客观终点？<span class='tag'>针对软硬终点偷换</span></li><li>测了多少指标？只报了几个？<span class='tag'>针对多重比较</span></li><li>什么人群？能套到我吗？<span class='tag'>针对泛化 / 异质性</span></li><li>谁出的钱？谁在发声？<span class='tag'>针对资助偏差 / 选择偏差</span></li></ol></div>
+
+  <h2 class="section">参考与数据源</h2>
+  <div class="refs"><ol><li>Manson JE, et al. Marine n-3 Fatty Acids and Prevention of Cardiovascular Disease and Cancer (VITAL). N Engl J Med 2019;380:23-32.</li><li>ASCEND Study Collaborative Group. Effects of n-3 Fatty Acid Supplements in Diabetes Mellitus. N Engl J Med 2018;379:1540-1550.</li><li>Bhatt DL, et al. Cardiovascular Risk Reduction with Icosapent Ethyl for Hypertriglyceridemia (REDUCE-IT). N Engl J Med 2019;380:11-22.</li><li>Nicholls SJ, et al. Effect of High-Dose Omega-3 Fatty Acids vs Corn Oil on Major Adverse Cardiovascular Events in Patients at High Cardiovascular Risk (STRENGTH). JAMA 2020;324:2268-2280.</li><li>Abdelhamid AS, et al. Omega-3 fatty acids for the primary and secondary prevention of cardiovascular disease. Cochrane Database Syst Rev 2020.</li></ol></div>
+
+  <footer class="colophon">
+    Generated by universal-pitfall-detector · 2026 年 05 月 29 日
+    · 仅作警示性分析，不替代专业医学/统计意见
+  </footer>
+
+</article>
+</body>
+</html>

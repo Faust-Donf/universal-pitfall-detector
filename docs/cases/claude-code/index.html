@@ -1,0 +1,628 @@
+<!--
+  学术杂志风格 HTML 模板
+  灵感来自 NEJM / JAMA / Nature 的视觉语言
+  占位符（由 scripts/html_report.py 替换）：
+    网上人人在用 Claude Code，身边没人听过？            主标题
+    A Statistical Analysis of Tech Echo Chamber and Selection Bias         副标题/数据源描述
+    universal-pitfall-detector · 公开估算与渗透率数据          作者署名（可留空）
+    2026 年 05 月 29 日             报告日期
+    社交媒体频繁出现『人人在用 Claude Code』的内容，但用户在线下、公司、亲友圈的真实观察是 <mark class='hl-red'>几乎没人听过</mark>。二者都是真实观察，矛盾的本质来自统计陷阱。      摘要"背景"段
+    基于 Anthropic 公开数据、Stack Overflow 2024 开发者调查、行业渗透率估算，使用 universal-pitfall-detector 对『普及度感知偏差』进行多陷阱规则匹配。 摘要"方法"段
+    Claude Code 在 <mark class='hl-red'>全球工作人口中渗透率仅 ~0.014%</mark>（50 万 MAU / 36 亿工作人口）；在技术 KOL 同温层感知普及率 <mark>≈ 85%</mark>，普通开发者圈 <mark>≈ 15%</mark>，非技术圈 <mark>< 2%</mark>。信息茧房 + 幸存者偏差 + 基率谬误三重叠加，造成『普及』错觉。 摘要"结果"段
+    『网上人人在用』描述的是 <mark>~500 万技术社交圈用户</mark> 的真实状态，『身边没人听过』描述的是 <mark>~36 亿工作人口</mark> 中 99.99% 的真实状态。两者都对，但代表的是 <mark class='hl-red'>不同的人群分布</mark>。不要用同温层观察推论全民现象。   摘要"结论"段
+    <div class="kpi">  <div class="v">85%</div>  <div class="l">技术圈感知普及率</div>  <div class="s">Twitter/HN 同温层</div></div>
+<div class="kpi">  <div class="v">15%</div>  <div class="l">普通开发者认知率</div>  <div class="s">公司日常工作场景</div></div>
+<div class="kpi">  <div class="v">0.014%</div>  <div class="l">全球真实渗透率</div>  <div class="s">工作人口 50 万 / 36 亿</div></div>
+<div class="kpi">  <div class="v">6</div>  <div class="l">检出陷阱总数</div>  <div class="s">2 高危 + 4 中等</div></div>        KPI 卡片 HTML
+    <div class="figure-grid">
+<figure class="">  <div class="figbody"><img src="fig1_iceberg.png" alt="幸存者偏差冰山图。"></div>  <figcaption>    <span class="figlabel">Figure 1.</span>    <span class="figtitle">幸存者偏差冰山图。</span>    你刷到 100 条 Claude Code 成功 demo，背后是 ~2000 条沉默/翻车/试用一次就弃用的样本。  </figcaption></figure>
+<figure class="">  <div class="figbody"><img src="fig2_audience.png" alt="三类人群对 AI 工具的认知度。"></div>  <figcaption>    <span class="figlabel">Figure 2.</span>    <span class="figtitle">三类人群对 AI 工具的认知度。</span>    技术 KOL 圈、普通开发者、非技术圈对 Claude Code 的认知度断崖式差异；ChatGPT 在三类人群中差距小得多。  </figcaption></figure>
+<figure class="full">  <div class="figbody"><img src="fig3_bubble.png" alt="感知普及率 vs 真实渗透率。"></div>  <figcaption>    <span class="figlabel">Figure 3.</span>    <span class="figtitle">感知普及率 vs 真实渗透率。</span>    技术 KOL 圈感知到的 85% 普及率，与全球真实渗透率 0.014% 之间相差 6000 倍。  </figcaption></figure>
+</div>      核心证据双栏 figure grid（BI 风格）
+    <div class="positive">  <h3>✓  确定有效的场景</h3>  <p class="lede">Claude Code 不是泡沫——以下场景里它确实带来了被实证的价值：</p>  <div class="grid"><div class='item'>  <div class='who'>重度命令行 / 终端工作流的资深开发者</div>  <div class='what'><mark class='hl-green'>把多步任务（搜索 → 读代码 → 改代码 → 跑测试 → 提交 PR）压缩到一句指令</mark>，效率提升 2–5 倍是常见反馈。</div>  <div class='meta'><b>证据：</b>Anthropic 官方案例 + 社区基准 · <b>剂量 / 方式：</b>适合 <b>每天数小时高强度编码</b> 的人群</div></div><div class='item'>  <div class='who'>需要快速接手陌生代码库的工程师</div>  <div class='what'><mark class='hl-green'>大上下文窗口 + 项目级理解</mark>，在『读懂别人代码』『快速重构』场景显著优于通用 ChatGPT。</div>  <div class='meta'><b>证据：</b>SWE-Bench / Terminal-Bench 公开基准</div></div><div class='item'>  <div class='who'>独立开发者 / 早期创业者</div>  <div class='what'>用 AI 折叠人力是 <mark class='hl-green'>真实生产力放大器</mark>，尤其适合『一个人造一个 SaaS』的工作流。</div>  <div class='meta'><b>证据：</b>GitHub / IndieHackers 社区案例</div></div><div class='item'>  <div class='who'>想学新技术栈 / 新框架的开发者</div>  <div class='what'><mark class='hl-green'>用对话式学习替代搜文档</mark>，试错周期变短。</div>  <div class='meta'><b>证据：</b>广泛社区反馈</div></div></div></div> "确定有效"绿色调区段 HTML
+    <table class='data'><thead><tr><th style='width:36px'>#</th><th style='width:72px'>严重度</th><th style='width:160px'>陷阱</th><th>关键发现</th></tr></thead><tbody><tr><td class='num'>1</td><td><span class='badge high'>高危</span></td><td><strong>信息茧房 / 选择偏差</strong></td><td>你看到「人人在用」的信息源（Twitter/HN/V2EX/技术博主）总活跃 ~500 万人，仅占全球工作人口的 0.1389%。算法把同类内容反复推给你，造成『所有人都在讨论』的错觉。这不是『普及』，是『回音室』。</td></tr>
+<tr><td class='num'>2</td><td><span class='badge high'>高危</span></td><td><strong>基率谬误（市场渗透率）</strong></td><td>Claude Code 月活约 50 万，全球开发者约 30 百万；开发者渗透率 ≈ 1.7%。在全球工作人口中渗透率 ≈ 0.01389%。『身边没人听过』是绝对正常的——99% 以上的人确实不知道。</td></tr>
+<tr><td class='num'>3</td><td><span class='badge medium'>中等</span></td><td><strong>幸存者偏差</strong></td><td>样本仅含存活者(100例)，被忽略的失败者约2000例；真实成功率≈4.8%（而非直觉上的'很常见'）</td></tr>
+<tr><td class='num'>4</td><td><span class='badge medium'>中等</span></td><td><strong>人群异质性 / 受众错位</strong></td><td>不同人群对工具的认知度断崖式差异：技术 KOL 圈 90% 听过 Claude Code，普通开发者 15%，非技术圈 2%。你『看到的世界』取决于你所在圈层，把圈内常态当成全民常态是典型的群体外推错误。</td></tr>
+<tr><td class='num'>5</td><td><span class='badge medium'>中等</span></td><td><strong>媒体放大效应</strong></td><td>AI 工具新闻在科技自媒体的曝光量被算法放大：单个产品发布可能产生上万条转发、视频、解读，但实际付费用户基数远小。曝光量 ≠ 使用量 ≠ 留存量。看到铺天盖地的内容时，先问『这是真实使用，还是流量话题』。</td></tr>
+<tr><td class='num'>6</td><td><span class='badge medium'>中等</span></td><td><strong>定义偏移（试用 vs 留存）</strong></td><td>『用过 Claude Code』『听过 Claude Code』『每天用 Claude Code』是三个完全不同的指标。新工具 30 天留存通常 &lt; 30%，媒体常用『用户数』模糊不同口径，给人『大家都在天天用』的错觉。</td></tr></tbody></table>    陷阱速览表 HTML
+    <div class="pitfall high">  <div class="head">    <span class="num">陷阱 01</span>    <span class="badge high">高危</span>    <span class="name">信息茧房 / 选择偏差</span>  </div>  <p>你看到「人人在用」的信息源（Twitter/HN/V2EX/技术博主）总活跃 ~500 万人，仅占全球工作人口的 0.1389%。算法把同类内容反复推给你，造成『所有人都在讨论』的错觉。这不是『普及』，是『回音室』。</p></div>
+<div class="pitfall high">  <div class="head">    <span class="num">陷阱 02</span>    <span class="badge high">高危</span>    <span class="name">基率谬误（市场渗透率）</span>  </div>  <p>Claude Code 月活约 50 万，全球开发者约 30 百万；开发者渗透率 ≈ 1.7%。在全球工作人口中渗透率 ≈ 0.01389%。『身边没人听过』是绝对正常的——99% 以上的人确实不知道。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 03</span>    <span class="badge medium">中等</span>    <span class="name">幸存者偏差</span>  </div>  <p>样本仅含存活者(100例)，被忽略的失败者约2000例；真实成功率≈4.8%（而非直觉上的'很常见'）</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 04</span>    <span class="badge medium">中等</span>    <span class="name">人群异质性 / 受众错位</span>  </div>  <p>不同人群对工具的认知度断崖式差异：技术 KOL 圈 90% 听过 Claude Code，普通开发者 15%，非技术圈 2%。你『看到的世界』取决于你所在圈层，把圈内常态当成全民常态是典型的群体外推错误。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 05</span>    <span class="badge medium">中等</span>    <span class="name">媒体放大效应</span>  </div>  <p>AI 工具新闻在科技自媒体的曝光量被算法放大：单个产品发布可能产生上万条转发、视频、解读，但实际付费用户基数远小。曝光量 ≠ 使用量 ≠ 留存量。看到铺天盖地的内容时，先问『这是真实使用，还是流量话题』。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 06</span>    <span class="badge medium">中等</span>    <span class="name">定义偏移（试用 vs 留存）</span>  </div>  <p>『用过 Claude Code』『听过 Claude Code』『每天用 Claude Code』是三个完全不同的指标。新工具 30 天留存通常 &lt; 30%，媒体常用『用户数』模糊不同口径，给人『大家都在天天用』的错觉。</p></div>   陷阱详解 HTML
+    <table class='data'>
+<thead><tr><th>场景</th><th>证据来源</th><th style='width:240px'>结论</th></tr></thead>
+<tbody>
+<tr><td>Twitter/HN/V2EX 等技术 KOL 同温层</td><td><em>社交媒体抓取 + 行业观察</em></td><td><span class='badge ok'>支持</span> <mark class='hl-green'>确实人人在用</mark></td></tr>
+<tr><td>普通互联网公司日常开发岗</td><td><em>Stack Overflow 2024 调查</em></td><td><span class='badge medium'>存疑</span> <mark>少数人听过</mark>，多数仍用 ChatGPT/Copilot</td></tr>
+<tr><td>非互联网行业 / 非技术岗位</td><td><em>行业渗透率估算</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>几乎无人知晓</mark>，符合预期</td></tr>
+<tr><td>用『感知普及率』判断商业机会 / 投资 / 选型</td><td><em>渗透率分析</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>极易高估实际市场</mark></td></tr>
+</tbody></table> 分场景结论表 HTML
+    <div class="recs"><div class="col do"><h4>推荐做</h4><ul><li>区分『感知普及率』和 <mark>『真实渗透率』</mark>，前者是你的信息源决定的，后者要看官方数据</li><li>判断一个新事物是否真的『普及』时，问：<mark>同温层之外的人</mark>有多少人知道</li><li>做产品 / 商业决策前，用 <mark class='hl-green'>真实 MAU / 全球基数</mark> 而非社交媒体热度估算市场</li></ul></div><div class="col avoid"><h4>避免做</h4><ul><li>把『我和我的圈子在用』等同于『大家都在用』</li><li>看到『所有人都在讨论 X』就 FOMO 跟进，<mark class='hl-red'>那只是算法在你眼前展示了一面墙</mark></li><li>用同温层数据外推全民趋势，会系统性高估早期产品的市场规模</li></ul></div></div>  实操建议 HTML
+    <div class="five"><h4>读者守则</h4><ol><li>绝对差多大？（不是相对差）<span class='tag'>针对相对风险夸大</span></li><li>主观还是客观终点？<span class='tag'>针对软硬终点偷换</span></li><li>测了多少指标？只报了几个？<span class='tag'>针对多重比较</span></li><li>什么人群？能套到我吗？<span class='tag'>针对泛化 / 异质性</span></li><li>谁出的钱？谁在发声？<span class='tag'>针对资助偏差 / 选择偏差</span></li></ol></div>   5 问护身符 HTML
+    <ol><li>Stack Overflow Developer Survey 2024.</li><li>Anthropic. Claude API and Claude Code public usage statistics, 2025.</li><li>Pariser E. The Filter Bubble: What the Internet Is Hiding from You. Penguin Press, 2011.</li><li>Sunstein CR. #Republic: Divided Democracy in the Age of Social Media. Princeton, 2017.</li></ol>       参考文献
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>网上人人在用 Claude Code，身边没人听过？</title>
+<style>
+  /* === 字体 === */
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap');
+
+  :root {
+    --serif: 'Source Serif 4', 'Source Serif Pro', 'Songti SC', 'Noto Serif SC', 'Charter', Georgia, serif;
+    --sans:  'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --ink:        #1a1a1a;
+    --ink-soft:   #404040;
+    --ink-muted:  #6b6b6b;
+    --line:       #d8d8d8;
+    --rule:       #e8e8e8;
+    --bg:         #ffffff;
+    --panel:      #fafaf7;
+    --accent:     #8B0000;       /* 学术红 / NEJM 风 */
+    --accent-soft:#fff5f5;
+    --high:       #B92020;
+    --medium:     #C77B30;
+    --low:        #6c757d;
+    --success:    #2d6a4f;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #f4f2ed;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 16px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .paper {
+    max-width: 880px;
+    margin: 32px auto;
+    background: var(--bg);
+    padding: 56px 64px 72px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-top: 4px solid var(--accent);
+  }
+
+  /* === 报头 === */
+  .masthead {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--sans);
+  }
+  .masthead .journal {
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: var(--accent);
+  }
+  .masthead .meta {
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.05em;
+  }
+
+  h1.title {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 1.25;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+  .subtitle {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: 15px;
+    margin: 0 0 8px;
+  }
+  .authors {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 28px;
+  }
+
+  /* === 摘要 === */
+  .abstract {
+    background: var(--panel);
+    border-left: 3px solid var(--accent);
+    padding: 22px 28px;
+    margin: 28px 0 36px;
+    font-size: 14.5px;
+    line-height: 1.7;
+  }
+  .abstract h2 {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 12px;
+  }
+  .abstract p { margin: 8px 0; }
+  .abstract .label {
+    font-family: var(--sans);
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.05em;
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-right: 6px;
+  }
+
+  /* === KPI 行 === */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin: 28px 0;
+  }
+  .kpi {
+    border: 1px solid var(--line);
+    border-top: 3px solid var(--accent);
+    padding: 16px 14px 14px;
+    text-align: center;
+    background: #fff;
+  }
+  .kpi .v {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--accent);
+    line-height: 1.1;
+  }
+  .kpi .l {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink);
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  .kpi .s {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    color: var(--ink-muted);
+    margin-top: 4px;
+  }
+
+  /* === 章节标题 === */
+  h2.section {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 19px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 6px;
+    margin: 44px 0 18px;
+  }
+  h2.section::before {
+    content: "§ ";
+    color: var(--accent);
+  }
+
+  h3.sub {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--ink);
+    margin: 24px 0 8px;
+  }
+
+  p { margin: 12px 0; }
+  p.lead {
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  /* === 荧光笔 === */
+  mark, mark.hl-yellow {
+    background: linear-gradient(180deg, transparent 55%, #FFE066 55%, #FFE066 92%, transparent 92%);
+    color: inherit;
+    padding: 0 2px;
+    font-weight: 600;
+  }
+  mark.hl-red {
+    background: linear-gradient(180deg, transparent 55%, #FFC2C2 55%, #FFC2C2 92%, transparent 92%);
+    color: var(--high);
+    font-weight: 700;
+  }
+  mark.hl-green {
+    background: linear-gradient(180deg, transparent 55%, #C8EBD0 55%, #C8EBD0 92%, transparent 92%);
+    color: var(--success);
+    font-weight: 700;
+  }
+  mark.hl-blue {
+    background: linear-gradient(180deg, transparent 55%, #CDE3F4 55%, #CDE3F4 92%, transparent 92%);
+    color: #1d3557;
+    font-weight: 600;
+  }
+
+  /* === 确定有效（positive findings）区段 === */
+  .positive {
+    background: #F1F8F4;
+    border: 1px solid #C6E2D0;
+    border-left: 4px solid var(--success);
+    padding: 22px 26px 24px;
+    margin: 26px 0 32px;
+  }
+  .positive h3 {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--success);
+    margin: 0 0 4px;
+  }
+  .positive .lede {
+    font-family: var(--serif);
+    font-size: 15.5px;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+  }
+  .positive .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 720px) {
+    .positive .grid { grid-template-columns: 1fr; }
+  }
+  .positive .item {
+    background: #fff;
+    border: 1px solid #d8e8de;
+    padding: 12px 14px;
+    font-size: 13.5px;
+  }
+  .positive .item .who {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 12px;
+    color: var(--success);
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+  }
+  .positive .item .what {
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 4px 0 6px;
+  }
+  .positive .item .meta {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+  .positive .item .meta b { color: var(--ink); font-weight: 600; }
+
+  /* === 图片 === */
+  figure {
+    margin: 0;
+    text-align: center;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  figure .figbody {
+    padding: 14px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--line);
+  }
+  figure img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+  }
+  figcaption {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    text-align: left;
+    padding: 12px 16px 14px;
+  }
+  figcaption .figlabel {
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 6px;
+    letter-spacing: 0.04em;
+  }
+  figcaption .figtitle {
+    font-weight: 600;
+    color: var(--ink);
+    margin-right: 4px;
+  }
+
+  /* === BI 风格双栏 figure grid === */
+  .figure-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 24px 0 32px;
+  }
+  .figure-grid figure.full {
+    grid-column: 1 / -1;
+  }
+  @media (max-width: 720px) {
+    .figure-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* === 表格 === */
+  table.data {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 18px 0;
+    font-size: 14px;
+    font-family: var(--serif);
+  }
+  table.data th, table.data td {
+    text-align: left;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  table.data thead th {
+    font-family: var(--sans);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    border-bottom: 2px solid var(--ink);
+    background: var(--panel);
+  }
+  table.data tr:last-child td { border-bottom: 2px solid var(--ink); }
+  table.data .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 9px;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #fff;
+    border-radius: 2px;
+  }
+  .badge.high   { background: var(--high); }
+  .badge.medium { background: var(--medium); }
+  .badge.low    { background: var(--low); }
+  .badge.ok     { background: var(--success); }
+
+  /* === 陷阱详解卡片 === */
+  .pitfall {
+    border-left: 3px solid var(--line);
+    padding: 4px 0 4px 18px;
+    margin: 22px 0;
+  }
+  .pitfall.high   { border-color: var(--high); }
+  .pitfall.medium { border-color: var(--medium); }
+  .pitfall.low    { border-color: var(--low); }
+  .pitfall .head {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .pitfall .name {
+    font-family: var(--serif);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .pitfall .num {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+  }
+  .pitfall p {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    margin: 6px 0;
+  }
+
+  /* === 实操建议 === */
+  .recs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 18px 0;
+  }
+  .recs .col {
+    border: 1px solid var(--line);
+    padding: 16px 18px;
+    font-size: 14px;
+  }
+  .recs .col h4 {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin: 0 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .recs .col.do h4    { color: var(--success); }
+  .recs .col.avoid h4 { color: var(--high); }
+  .recs ul { margin: 0; padding-left: 18px; }
+  .recs li { margin: 6px 0; line-height: 1.55; }
+
+  /* === 5 问护身符 === */
+  .five {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-family: var(--sans);
+  }
+  .five h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin: 0 0 12px;
+    color: var(--accent);
+  }
+  .five ol {
+    margin: 0; padding: 0;
+    list-style: none;
+    counter-reset: q;
+  }
+  .five li {
+    counter-increment: q;
+    padding: 8px 0 8px 36px;
+    position: relative;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    border-bottom: 1px dashed var(--rule);
+  }
+  .five li:last-child { border-bottom: none; }
+  .five li::before {
+    content: counter(q);
+    position: absolute; left: 0; top: 6px;
+    width: 24px; height: 24px;
+    line-height: 24px; text-align: center;
+    background: var(--accent); color: #fff;
+    font-weight: 700;
+    font-family: var(--sans);
+    border-radius: 50%;
+    font-size: 11.5px;
+  }
+  .five .tag {
+    color: var(--ink-muted);
+    font-style: italic;
+    font-size: 12px;
+    margin-left: 8px;
+  }
+
+  /* === 参考文献 === */
+  .refs {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 12px;
+  }
+  .refs ol {
+    padding-left: 22px;
+    margin: 0;
+  }
+  .refs li {
+    margin: 6px 0;
+    line-height: 1.55;
+  }
+
+  /* === 页脚 === */
+  footer.colophon {
+    margin-top: 60px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+
+  /* === 打印优化 === */
+  @media print {
+    body { background: #fff; }
+    .paper { box-shadow: none; margin: 0; max-width: none; padding: 24mm; }
+  }
+</style>
+</head>
+<body>
+<article class="paper">
+
+  <header class="masthead">
+    <span class="journal">Pitfall Review · 统计陷阱评论</span>
+    <span class="meta">2026 年 05 月 29 日</span>
+  </header>
+
+  <h1 class="title">网上人人在用 Claude Code，身边没人听过？</h1>
+  <p class="subtitle">A Statistical Analysis of Tech Echo Chamber and Selection Bias</p>
+  <p class="authors">universal-pitfall-detector · 公开估算与渗透率数据</p>
+
+  <section class="abstract">
+    <h2>Abstract · 摘要</h2>
+    <p><span class="label">背景</span>社交媒体频繁出现『人人在用 Claude Code』的内容，但用户在线下、公司、亲友圈的真实观察是 <mark class='hl-red'>几乎没人听过</mark>。二者都是真实观察，矛盾的本质来自统计陷阱。</p>
+    <p><span class="label">方法</span>基于 Anthropic 公开数据、Stack Overflow 2024 开发者调查、行业渗透率估算，使用 universal-pitfall-detector 对『普及度感知偏差』进行多陷阱规则匹配。</p>
+    <p><span class="label">结果</span>Claude Code 在 <mark class='hl-red'>全球工作人口中渗透率仅 ~0.014%</mark>（50 万 MAU / 36 亿工作人口）；在技术 KOL 同温层感知普及率 <mark>≈ 85%</mark>，普通开发者圈 <mark>≈ 15%</mark>，非技术圈 <mark>< 2%</mark>。信息茧房 + 幸存者偏差 + 基率谬误三重叠加，造成『普及』错觉。</p>
+    <p><span class="label">结论</span>『网上人人在用』描述的是 <mark>~500 万技术社交圈用户</mark> 的真实状态，『身边没人听过』描述的是 <mark>~36 亿工作人口</mark> 中 99.99% 的真实状态。两者都对，但代表的是 <mark class='hl-red'>不同的人群分布</mark>。不要用同温层观察推论全民现象。</p>
+  </section>
+
+  <div class="kpi-row">
+    <div class="kpi">  <div class="v">85%</div>  <div class="l">技术圈感知普及率</div>  <div class="s">Twitter/HN 同温层</div></div>
+<div class="kpi">  <div class="v">15%</div>  <div class="l">普通开发者认知率</div>  <div class="s">公司日常工作场景</div></div>
+<div class="kpi">  <div class="v">0.014%</div>  <div class="l">全球真实渗透率</div>  <div class="s">工作人口 50 万 / 36 亿</div></div>
+<div class="kpi">  <div class="v">6</div>  <div class="l">检出陷阱总数</div>  <div class="s">2 高危 + 4 中等</div></div>
+  </div>
+
+  <h2 class="section">核心证据</h2>
+  <div class="figure-grid">
+<figure class="">  <div class="figbody"><img src="fig1_iceberg.png" alt="幸存者偏差冰山图。"></div>  <figcaption>    <span class="figlabel">Figure 1.</span>    <span class="figtitle">幸存者偏差冰山图。</span>    你刷到 100 条 Claude Code 成功 demo，背后是 ~2000 条沉默/翻车/试用一次就弃用的样本。  </figcaption></figure>
+<figure class="">  <div class="figbody"><img src="fig2_audience.png" alt="三类人群对 AI 工具的认知度。"></div>  <figcaption>    <span class="figlabel">Figure 2.</span>    <span class="figtitle">三类人群对 AI 工具的认知度。</span>    技术 KOL 圈、普通开发者、非技术圈对 Claude Code 的认知度断崖式差异；ChatGPT 在三类人群中差距小得多。  </figcaption></figure>
+<figure class="full">  <div class="figbody"><img src="fig3_bubble.png" alt="感知普及率 vs 真实渗透率。"></div>  <figcaption>    <span class="figlabel">Figure 3.</span>    <span class="figtitle">感知普及率 vs 真实渗透率。</span>    技术 KOL 圈感知到的 85% 普及率，与全球真实渗透率 0.014% 之间相差 6000 倍。  </figcaption></figure>
+</div>
+
+  <div class="positive">  <h3>✓  确定有效的场景</h3>  <p class="lede">Claude Code 不是泡沫——以下场景里它确实带来了被实证的价值：</p>  <div class="grid"><div class='item'>  <div class='who'>重度命令行 / 终端工作流的资深开发者</div>  <div class='what'><mark class='hl-green'>把多步任务（搜索 → 读代码 → 改代码 → 跑测试 → 提交 PR）压缩到一句指令</mark>，效率提升 2–5 倍是常见反馈。</div>  <div class='meta'><b>证据：</b>Anthropic 官方案例 + 社区基准 · <b>剂量 / 方式：</b>适合 <b>每天数小时高强度编码</b> 的人群</div></div><div class='item'>  <div class='who'>需要快速接手陌生代码库的工程师</div>  <div class='what'><mark class='hl-green'>大上下文窗口 + 项目级理解</mark>，在『读懂别人代码』『快速重构』场景显著优于通用 ChatGPT。</div>  <div class='meta'><b>证据：</b>SWE-Bench / Terminal-Bench 公开基准</div></div><div class='item'>  <div class='who'>独立开发者 / 早期创业者</div>  <div class='what'>用 AI 折叠人力是 <mark class='hl-green'>真实生产力放大器</mark>，尤其适合『一个人造一个 SaaS』的工作流。</div>  <div class='meta'><b>证据：</b>GitHub / IndieHackers 社区案例</div></div><div class='item'>  <div class='who'>想学新技术栈 / 新框架的开发者</div>  <div class='what'><mark class='hl-green'>用对话式学习替代搜文档</mark>，试错周期变短。</div>  <div class='meta'><b>证据：</b>广泛社区反馈</div></div></div></div>
+
+  <h2 class="section">陷阱速览</h2>
+  <table class='data'><thead><tr><th style='width:36px'>#</th><th style='width:72px'>严重度</th><th style='width:160px'>陷阱</th><th>关键发现</th></tr></thead><tbody><tr><td class='num'>1</td><td><span class='badge high'>高危</span></td><td><strong>信息茧房 / 选择偏差</strong></td><td>你看到「人人在用」的信息源（Twitter/HN/V2EX/技术博主）总活跃 ~500 万人，仅占全球工作人口的 0.1389%。算法把同类内容反复推给你，造成『所有人都在讨论』的错觉。这不是『普及』，是『回音室』。</td></tr>
+<tr><td class='num'>2</td><td><span class='badge high'>高危</span></td><td><strong>基率谬误（市场渗透率）</strong></td><td>Claude Code 月活约 50 万，全球开发者约 30 百万；开发者渗透率 ≈ 1.7%。在全球工作人口中渗透率 ≈ 0.01389%。『身边没人听过』是绝对正常的——99% 以上的人确实不知道。</td></tr>
+<tr><td class='num'>3</td><td><span class='badge medium'>中等</span></td><td><strong>幸存者偏差</strong></td><td>样本仅含存活者(100例)，被忽略的失败者约2000例；真实成功率≈4.8%（而非直觉上的'很常见'）</td></tr>
+<tr><td class='num'>4</td><td><span class='badge medium'>中等</span></td><td><strong>人群异质性 / 受众错位</strong></td><td>不同人群对工具的认知度断崖式差异：技术 KOL 圈 90% 听过 Claude Code，普通开发者 15%，非技术圈 2%。你『看到的世界』取决于你所在圈层，把圈内常态当成全民常态是典型的群体外推错误。</td></tr>
+<tr><td class='num'>5</td><td><span class='badge medium'>中等</span></td><td><strong>媒体放大效应</strong></td><td>AI 工具新闻在科技自媒体的曝光量被算法放大：单个产品发布可能产生上万条转发、视频、解读，但实际付费用户基数远小。曝光量 ≠ 使用量 ≠ 留存量。看到铺天盖地的内容时，先问『这是真实使用，还是流量话题』。</td></tr>
+<tr><td class='num'>6</td><td><span class='badge medium'>中等</span></td><td><strong>定义偏移（试用 vs 留存）</strong></td><td>『用过 Claude Code』『听过 Claude Code』『每天用 Claude Code』是三个完全不同的指标。新工具 30 天留存通常 &lt; 30%，媒体常用『用户数』模糊不同口径，给人『大家都在天天用』的错觉。</td></tr></tbody></table>
+
+  <h2 class="section">陷阱详解</h2>
+  <div class="pitfall high">  <div class="head">    <span class="num">陷阱 01</span>    <span class="badge high">高危</span>    <span class="name">信息茧房 / 选择偏差</span>  </div>  <p>你看到「人人在用」的信息源（Twitter/HN/V2EX/技术博主）总活跃 ~500 万人，仅占全球工作人口的 0.1389%。算法把同类内容反复推给你，造成『所有人都在讨论』的错觉。这不是『普及』，是『回音室』。</p></div>
+<div class="pitfall high">  <div class="head">    <span class="num">陷阱 02</span>    <span class="badge high">高危</span>    <span class="name">基率谬误（市场渗透率）</span>  </div>  <p>Claude Code 月活约 50 万，全球开发者约 30 百万；开发者渗透率 ≈ 1.7%。在全球工作人口中渗透率 ≈ 0.01389%。『身边没人听过』是绝对正常的——99% 以上的人确实不知道。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 03</span>    <span class="badge medium">中等</span>    <span class="name">幸存者偏差</span>  </div>  <p>样本仅含存活者(100例)，被忽略的失败者约2000例；真实成功率≈4.8%（而非直觉上的'很常见'）</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 04</span>    <span class="badge medium">中等</span>    <span class="name">人群异质性 / 受众错位</span>  </div>  <p>不同人群对工具的认知度断崖式差异：技术 KOL 圈 90% 听过 Claude Code，普通开发者 15%，非技术圈 2%。你『看到的世界』取决于你所在圈层，把圈内常态当成全民常态是典型的群体外推错误。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 05</span>    <span class="badge medium">中等</span>    <span class="name">媒体放大效应</span>  </div>  <p>AI 工具新闻在科技自媒体的曝光量被算法放大：单个产品发布可能产生上万条转发、视频、解读，但实际付费用户基数远小。曝光量 ≠ 使用量 ≠ 留存量。看到铺天盖地的内容时，先问『这是真实使用，还是流量话题』。</p></div>
+<div class="pitfall medium">  <div class="head">    <span class="num">陷阱 06</span>    <span class="badge medium">中等</span>    <span class="name">定义偏移（试用 vs 留存）</span>  </div>  <p>『用过 Claude Code』『听过 Claude Code』『每天用 Claude Code』是三个完全不同的指标。新工具 30 天留存通常 &lt; 30%，媒体常用『用户数』模糊不同口径，给人『大家都在天天用』的错觉。</p></div>
+
+  <h2 class="section">分场景结论</h2>
+  <table class='data'>
+<thead><tr><th>场景</th><th>证据来源</th><th style='width:240px'>结论</th></tr></thead>
+<tbody>
+<tr><td>Twitter/HN/V2EX 等技术 KOL 同温层</td><td><em>社交媒体抓取 + 行业观察</em></td><td><span class='badge ok'>支持</span> <mark class='hl-green'>确实人人在用</mark></td></tr>
+<tr><td>普通互联网公司日常开发岗</td><td><em>Stack Overflow 2024 调查</em></td><td><span class='badge medium'>存疑</span> <mark>少数人听过</mark>，多数仍用 ChatGPT/Copilot</td></tr>
+<tr><td>非互联网行业 / 非技术岗位</td><td><em>行业渗透率估算</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>几乎无人知晓</mark>，符合预期</td></tr>
+<tr><td>用『感知普及率』判断商业机会 / 投资 / 选型</td><td><em>渗透率分析</em></td><td><span class='badge high'>不支持</span> <mark class='hl-red'>极易高估实际市场</mark></td></tr>
+</tbody></table>
+
+  <h2 class="section">实操建议</h2>
+  <div class="recs"><div class="col do"><h4>推荐做</h4><ul><li>区分『感知普及率』和 <mark>『真实渗透率』</mark>，前者是你的信息源决定的，后者要看官方数据</li><li>判断一个新事物是否真的『普及』时，问：<mark>同温层之外的人</mark>有多少人知道</li><li>做产品 / 商业决策前，用 <mark class='hl-green'>真实 MAU / 全球基数</mark> 而非社交媒体热度估算市场</li></ul></div><div class="col avoid"><h4>避免做</h4><ul><li>把『我和我的圈子在用』等同于『大家都在用』</li><li>看到『所有人都在讨论 X』就 FOMO 跟进，<mark class='hl-red'>那只是算法在你眼前展示了一面墙</mark></li><li>用同温层数据外推全民趋势，会系统性高估早期产品的市场规模</li></ul></div></div>
+
+  <h2 class="section">读者守则：5 问护身符</h2>
+  <div class="five"><h4>读者守则</h4><ol><li>绝对差多大？（不是相对差）<span class='tag'>针对相对风险夸大</span></li><li>主观还是客观终点？<span class='tag'>针对软硬终点偷换</span></li><li>测了多少指标？只报了几个？<span class='tag'>针对多重比较</span></li><li>什么人群？能套到我吗？<span class='tag'>针对泛化 / 异质性</span></li><li>谁出的钱？谁在发声？<span class='tag'>针对资助偏差 / 选择偏差</span></li></ol></div>
+
+  <h2 class="section">参考与数据源</h2>
+  <div class="refs"><ol><li>Stack Overflow Developer Survey 2024.</li><li>Anthropic. Claude API and Claude Code public usage statistics, 2025.</li><li>Pariser E. The Filter Bubble: What the Internet Is Hiding from You. Penguin Press, 2011.</li><li>Sunstein CR. #Republic: Divided Democracy in the Age of Social Media. Princeton, 2017.</li></ol></div>
+
+  <footer class="colophon">
+    Generated by universal-pitfall-detector · 2026 年 05 月 29 日
+    · 仅作警示性分析，不替代专业医学/统计意见
+  </footer>
+
+</article>
+</body>
+</html>

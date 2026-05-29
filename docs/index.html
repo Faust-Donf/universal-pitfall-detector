@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Universal Pitfall Detector · 统计陷阱检测器</title>
+<meta name="description" content="A Claude Code Skill that detects 9 classes of statistical pitfalls in everyday claims. 给「研究显示」「NN% 有效率」「人人在用」装一个 BS 检测器。">
+
+<!-- OpenGraph for social sharing -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Universal Pitfall Detector · 统计陷阱检测器">
+<meta property="og:description" content="给「研究显示」「NN% 有效率」「人人在用」这类论断装一个 BS 检测器。9 类陷阱 · 学术杂志风格 HTML 报告。">
+<meta property="og:image" content="https://faust-donf.github.io/universal-pitfall-detector/social-preview.png">
+<meta property="og:url" content="https://faust-donf.github.io/universal-pitfall-detector/">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --serif: 'Source Serif 4', 'Songti SC', 'Noto Serif SC', Georgia, serif;
+    --sans:  'Inter', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    --ink: #1a1a1a;
+    --ink-soft: #404040;
+    --ink-muted: #6b6b6b;
+    --line: #e0e0e0;
+    --bg: #fafaf7;
+    --paper: #ffffff;
+    --accent: #8B0000;
+    --high: #B92020;
+    --success: #2d6a4f;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: var(--serif);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.7;
+  }
+
+  .container { max-width: 920px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(180deg, #fff 0%, var(--bg) 100%);
+    border-bottom: 1px solid var(--line);
+    padding: 80px 0 60px;
+    text-align: center;
+  }
+  .hero .badge {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: 44px;
+    font-weight: 700;
+    margin: 0 0 12px;
+    line-height: 1.15;
+  }
+  .hero .sub {
+    font-size: 17px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin: 0 auto 28px;
+    max-width: 640px;
+  }
+  .hero .ctas {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 11px 22px;
+    font-family: var(--sans);
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .btn.primary { background: var(--ink); color: #fff; }
+  .btn.primary:hover { background: #000; }
+  .btn.outline { border-color: var(--line); color: var(--ink); background: #fff; }
+  .btn.outline:hover { border-color: var(--ink); }
+
+  /* Sections */
+  section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type { border-bottom: none; }
+  h2.section-title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 24px;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px;
+  }
+  h2.section-title::before { content: "§ "; color: var(--accent); }
+
+  /* Pitfall pills */
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 0; }
+  .pill {
+    font-family: var(--sans);
+    font-size: 12.5px;
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+    border-radius: 999px;
+    color: var(--ink-soft);
+  }
+
+  /* Workflow */
+  .workflow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .step {
+    background: #fff;
+    border: 1px solid var(--line);
+    padding: 18px 16px;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .step .n {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .step .t {
+    font-family: var(--serif);
+    font-weight: 600;
+    margin: 8px 0 6px;
+    font-size: 16px;
+  }
+  .step .d {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+  }
+  @media (max-width: 720px) {
+    .workflow { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Cases */
+  .cases { display: grid; gap: 18px; }
+  .case {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--accent);
+    padding: 24px 28px;
+    border-radius: 4px;
+    transition: box-shadow 0.15s;
+  }
+  .case:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+  .case h3 {
+    margin: 0 0 8px;
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 700;
+  }
+  .case .claim {
+    font-style: italic;
+    color: var(--ink-muted);
+    margin: 6px 0 12px;
+    font-size: 14.5px;
+  }
+  .case .body {
+    color: var(--ink-soft);
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+  .case .body p { margin: 8px 0; }
+  .case .stats {
+    display: flex;
+    gap: 24px;
+    margin: 14px 0 4px;
+    flex-wrap: wrap;
+  }
+  .case .stat .v {
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--accent);
+    font-family: var(--serif);
+  }
+  .case .stat .l {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .case .links {
+    margin-top: 14px;
+    font-family: var(--sans);
+    font-size: 13px;
+  }
+  .case .links a {
+    color: var(--accent);
+    text-decoration: none;
+    margin-right: 18px;
+    border-bottom: 1px solid transparent;
+  }
+  .case .links a:hover { border-bottom-color: var(--accent); }
+
+  mark {
+    background: linear-gradient(180deg, transparent 55%, #FFE066 55%, #FFE066 92%, transparent 92%);
+    padding: 0 2px;
+    font-weight: 600;
+  }
+  mark.r {
+    background: linear-gradient(180deg, transparent 55%, #FFC2C2 55%, #FFC2C2 92%, transparent 92%);
+    color: var(--high);
+  }
+  mark.g {
+    background: linear-gradient(180deg, transparent 55%, #C8EBD0 55%, #C8EBD0 92%, transparent 92%);
+    color: var(--success);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    padding: 36px 0 48px;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink-muted);
+    border-top: 1px solid var(--line);
+  }
+  footer a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px dotted; }
+
+  code {
+    font-family: 'Menlo', 'Monaco', monospace;
+    font-size: 13px;
+    background: #f0eee9;
+    padding: 1px 6px;
+    border-radius: 3px;
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="container">
+    <div class="badge">A Claude Code Skill · 统计陷阱检测器</div>
+    <h1>Universal Pitfall Detector</h1>
+    <p class="sub">
+      给「研究显示」「NN% 有效率」「人人在用」这类论断装一个 BS 检测器。<br>
+      A bullshit detector for "studies show…", "NN% effective", and "everyone is using…" claims.
+    </p>
+    <div class="ctas">
+      <a class="btn primary" href="https://github.com/Faust-Donf/universal-pitfall-detector">
+        ★ Star on GitHub
+      </a>
+      <a class="btn outline" href="cases/fish-oil/">查看鱼油案例报告 →</a>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <h2 class="section-title">9 类被检测的统计陷阱</h2>
+    <p>它能识别那些"听起来很有道理，其实是统计陷阱"的论断：</p>
+    <div class="pills">
+      <span class="pill">辛普森悖论</span>
+      <span class="pill">幸存者偏差</span>
+      <span class="pill">相对风险夸大</span>
+      <span class="pill">软硬终点偷换</span>
+      <span class="pill">效应量微小</span>
+      <span class="pill">安慰剂未控制</span>
+      <span class="pill">基率谬误</span>
+      <span class="pill">选择偏差</span>
+      <span class="pill">数据污染</span>
+      <span class="pill">多重比较未校正</span>
+    </div>
+    <p style="margin-top:22px; color: var(--ink-soft);">
+      核心理念：<strong>不只揭穿，也确认</strong>。每份报告都有一个绿色调的「<mark class="g">确定有效的场景</mark>」区段，
+      列出经过严谨证据支持的有效场景，避免读者陷入"什么都没用"的虚无主义。
+    </p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2 class="section-title">工作流</h2>
+    <div class="workflow">
+      <div class="step">
+        <div class="n">STEP 01</div>
+        <div class="t">数据接入</div>
+        <div class="d">CSV / 字典 / 公开 RCT / 联网检索</div>
+      </div>
+      <div class="step">
+        <div class="n">STEP 02</div>
+        <div class="t">陷阱匹配</div>
+        <div class="d">9 类规则 · ARR / RRR / NNT / Cohen's d / Bonferroni</div>
+      </div>
+      <div class="step">
+        <div class="n">STEP 03</div>
+        <div class="t">可视化</div>
+        <div class="d">5 种独立图表 + 总览 dashboard</div>
+      </div>
+      <div class="step">
+        <div class="n">STEP 04</div>
+        <div class="t">多格式报告</div>
+        <div class="d">Markdown · PNG · 学术杂志 HTML</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2 class="section-title">三个旗舰案例</h2>
+    <div class="cases">
+
+      <div class="case">
+        <h3>鱼油（Omega-3）真的有用吗？</h3>
+        <p class="claim">"REDUCE-IT 试验显示鱼油降低 22% 心血管风险！"</p>
+        <div class="body">
+          <p>检测：<strong>8 项陷阱</strong>。相对风险夸大（<mark>ARR=4.8% · NNT=21</mark>）、
+            软硬终点偷换、人群泛化错误、剂量混淆。</p>
+          <p>报告同时确认：<mark class="g">高危心血管病 + 高甘油三酯 + 处方 4g 纯 EPA</mark>
+            是被 RCT 支持的；重度高甘油三酯血症、孕期 DHA、严格素食者也有明确证据。</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v">8</div><div class="l">陷阱</div></div>
+          <div class="stat"><div class="v">4.8%</div><div class="l">真实 ARR</div></div>
+          <div class="stat"><div class="v">21</div><div class="l">NNT</div></div>
+          <div class="stat"><div class="v">4</div><div class="l">确定有效场景</div></div>
+        </div>
+        <div class="links">
+          <a href="cases/fish-oil/">📄 完整报告</a>
+          <a href="https://github.com/Faust-Donf/universal-pitfall-detector/blob/main/examples/analyze_fish_oil.py">🔬 源码</a>
+        </div>
+      </div>
+
+      <div class="case">
+        <h3>维生素 B 族对健康有帮助吗？</h3>
+        <p class="claim">"B 族提神抗疲劳！预防心脑血管！5000% RDA 高效！"</p>
+        <div class="body">
+          <p>检测：<strong>7 项陷阱</strong>。HOPE-2 / VITATOPS / SEARCH 等
+            <mark>N&gt;5 万 RCT 显示心血管事件 ARR≈0</mark>；客观硬终点 5/5 不显著。
+            B6 长期 &gt;200mg/天可致 <mark class="r">周围神经病变</mark>。</p>
+          <p>但 <mark class="g">B12 缺乏症 / 孕期叶酸 / 严格素食者 / 酗酒急救</mark>
+            的补充有公共卫生级证据支持。</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v">7</div><div class="l">陷阱</div></div>
+          <div class="stat"><div class="v">5/5</div><div class="l">硬终点不显著</div></div>
+          <div class="stat"><div class="v">5000%</div><div class="l">市售剂量倍数</div></div>
+          <div class="stat"><div class="v">5</div><div class="l">确定有效场景</div></div>
+        </div>
+        <div class="links">
+          <a href="cases/vitamin-b/">📄 完整报告</a>
+          <a href="https://github.com/Faust-Donf/universal-pitfall-detector/blob/main/examples/analyze_vitamin_b.py">🔬 源码</a>
+        </div>
+      </div>
+
+      <div class="case">
+        <h3>"网上人人在用 Claude Code，身边没人听过"</h3>
+        <p class="claim">两句话能同时为真——前者是信息茧房的真，后者是绝对人口的真。</p>
+        <div class="body">
+          <p>检测：<strong>6 项陷阱</strong>。Claude Code 在全球工作人口中渗透率仅
+            <mark>~0.014%</mark>（50 万 MAU / 36 亿工作人口），
+            技术 KOL 同温层感知普及率 <mark class="r">~85%</mark>，相差 <mark>6000 倍</mark>。</p>
+          <p>报告同时确认：对 <mark class="g">重度命令行开发者、接手陌生代码库、独立开发者</mark>，
+            Claude Code 是被实证的真实生产力放大器。</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="v">6</div><div class="l">陷阱</div></div>
+          <div class="stat"><div class="v">85%</div><div class="l">圈内感知率</div></div>
+          <div class="stat"><div class="v">0.014%</div><div class="l">真实渗透率</div></div>
+          <div class="stat"><div class="v">6000×</div><div class="l">感知/真实差距</div></div>
+        </div>
+        <div class="links">
+          <a href="cases/claude-code/">📄 完整报告</a>
+          <a href="https://github.com/Faust-Donf/universal-pitfall-detector/blob/main/examples/analyze_claude_code_bubble.py">🔬 源码</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2 class="section-title">5 问护身符</h2>
+    <p>看到任何"研究显示…"类结论，按顺序问 5 个问题，9 成营销话术会自动崩塌：</p>
+    <ol style="font-family: var(--sans); font-size: 14.5px; color: var(--ink-soft); line-height: 1.85;">
+      <li><strong>绝对差多大？</strong>（不是相对差）</li>
+      <li><strong>主观还是客观终点？</strong>（自评 vs 死亡率）</li>
+      <li><strong>测了多少指标？只报了几个？</strong></li>
+      <li><strong>什么人群得出的结论？能套到我吗？</strong></li>
+      <li><strong>谁出的钱？谁会发声？</strong></li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2 class="section-title">快速开始</h2>
+    <pre style="background: #1a1a1a; color: #f0f0f0; padding: 18px 22px; border-radius: 4px; overflow-x: auto; font-size: 13px; line-height: 1.7;">
+git clone https://github.com/Faust-Donf/universal-pitfall-detector.git
+cd universal-pitfall-detector
+pip install -r requirements.txt
+
+python examples/analyze_fish_oil.py
+python examples/analyze_vitamin_b.py
+python examples/analyze_claude_code_bubble.py</pre>
+    <p style="margin-top: 18px;">
+      把整个目录复制到 <code>~/.claude/skills/universal-pitfall-detector/</code>，
+      重启 Claude Code，就可以直接说：<br>
+      <em style="color: var(--ink-muted);">"用统计陷阱 skill 分析下『红酒每天一杯有益健康吗』"</em>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    Generated by universal-pitfall-detector ·
+    <a href="https://github.com/Faust-Donf/universal-pitfall-detector">GitHub</a> ·
+    MIT License · 仅作警示性分析，不替代专业医学/统计/法律意见
+  </div>
+</footer>
+
+</body>
+</html>
